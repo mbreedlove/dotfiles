@@ -84,6 +84,7 @@
     Plug 'tpope/vim-sensible'
     " Make sure you use single quotes
     Plug 'scrooloose/nerdtree' ", { 'on': 'NERDTreeToggle' }
+    Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'tpope/vim-fugitive'
     Plug 'mattn/emmet-vim'
     Plug 'tpope/vim-rails'
