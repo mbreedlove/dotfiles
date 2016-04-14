@@ -89,6 +89,7 @@
     Plug 'mattn/emmet-vim'
     Plug 'tpope/vim-rails'
     Plug 'tpope/vim-bundler'
+    Plug 'ctrlpvim/ctrlp.vim'
 
     "Plug 'Valloric/YouCompleteMe', { 'do': 'make', 'for': 'cpp' }
     "autocmd! User YouCompleteMe if !has('vim_starting') | call youcompleteme#Enable() | endif
