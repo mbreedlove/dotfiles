@@ -1,7 +1,39 @@
+" Plugins {
+    if empty(glob('~/.vim/autoload/plug.vim'))
+      silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+            \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+      autocmd VimEnter * PlugInstall | source $MYVIMRC
+    endif
+
+    call plug#begin()
+
+    Plug 'tpope/vim-sensible'
+    Plug 'scrooloose/nerdtree'
+    Plug 'ctrlpvim/ctrlp.vim'
+    Plug 'easymotion/vim-easymotion'
+    Plug 'vim-airline/vim-airline'
+    Plug 'terryma/vim-multiple-cursors'
+
+    Plug 'tpope/vim-fugitive'
+    Plug 'Xuyuanp/nerdtree-git-plugin'
+    Plug 'airblade/vim-gitgutter'
+
+    Plug 'mattn/emmet-vim'
+
+    Plug 'vim-ruby/vim-ruby'
+    Plug 'tpope/vim-rails'
+    Plug 'tpope/vim-bundler'
+
+    " Colorschemes
+    Plug 'altercation/vim-colors-solarized'
+
+    call plug#end()
+" }
+
 " Basics {
     set nocompatible     " explicitly get out of vi-compatible mode
-    "set noexrc       " don't use local version of .(g)vimrc, .exrc
-    "set background=dark     " we plan to use a dark background
+    set noexrc       " don't use local version of .(g)vimrc, .exrc
+    set background=dark     " we plan to use a dark background
     syntax on       " syntax highlighting on
 " }
 
@@ -24,8 +56,8 @@
 " }
 
 " Vim UI {
-    colorscheme molokai
-    let g:molokai_original = 1
+    let g:solarized_termcolors=256
+    colorscheme solarized
     set linespace=0              " don't insert any extra pixel lines betweens rows
    "set list                     " we do what to show tabs, to ensure we get them out of my files
    "set listchars=tab:>-,trail:- " show tabs and trailing
@@ -69,43 +101,25 @@
     set pastetoggle=<F2>                        " <F2> toggles paste mode
 " }
 
-" Plugins {
-    if empty(glob('~/.vim/autoload/plug.vim'))
-      silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-            \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-      autocmd VimEnter * PlugInstall | source $MYVIMRC
-    endif
-
-    call plug#begin()
-    Plug 'tpope/vim-sensible'
-    " Make sure you use single quotes
-    Plug 'scrooloose/nerdtree' ", { 'on': 'NERDTreeToggle' }
-    Plug 'Xuyuanp/nerdtree-git-plugin'
-    Plug 'tpope/vim-fugitive'
-    Plug 'mattn/emmet-vim'
-    Plug 'vim-ruby/vim-ruby'
-    Plug 'tpope/vim-rails'
-    Plug 'tpope/vim-bundler'
-    Plug 'ctrlpvim/ctrlp.vim'
-    Plug 'easymotion/vim-easymotion'
-    Plug 'vim-airline/vim-airline'
-
-    "Plug 'Valloric/YouCompleteMe', { 'do': 'make', 'for': 'cpp' }
-    "autocmd! User YouCompleteMe if !has('vim_starting') | call youcompleteme#Enable() | endif
-    
-    call plug#end()
-" }
-
 " NerdTREE {
     " Open NerdTREE if no files specified
-    autocmd StdinReadPre * let s:std_in=1
-    autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"   autocmd StdinReadPre * let s:std_in=1
+"   autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
     " NerdTREE key binding
-    map <C-n> :NERDTreeToggle<CR>
+    map <C-f> :NERDTreeToggle<CR>
     " Close Vim if only window is NerdTREE
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " }
 
 " Airline {
     let g:airline#extensions#tabline#enabled = 1
+" }
+
+" Multiple Cursors {
+    let g:multi_cursor_use_default_mapping=0
+
+    let g:multi_cursor_next_key='<C-n>'
+    let g:multi_cursor_prev_key='<C-p>'
+    let g:multi_cursor_skip_key='<C-x>'
+    let g:multi_cursor_quit_key='<Esc>'
 " }
