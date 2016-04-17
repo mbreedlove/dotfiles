@@ -21,10 +21,6 @@
     endif
     set noerrorbells     " don't make noise
     " Open each file in its own tab/buffer
-    au BufNewFile,BufRead * nested
-    \ if &buftype != "help" |
-        \   tab sball |
-    \ endif
 " }
 
 " Vim UI {
@@ -66,9 +62,9 @@
 " }
 
 " Mappings {
-    " Tabs
-    nmap  <F7>  :tabp<CR>     " <F7> is previous tab
-    nmap  <F8>  :tabn<CR>    " <F8> is next tab
+    " Buffers
+    nmap  <F7>  :bprevious<CR>     " <F7> is previous buffer
+    nmap  <F8>  :bnext<CR>    " <F8> is next buffer
 
     set pastetoggle=<F2>                        " <F2> toggles paste mode
 " }
@@ -92,6 +88,7 @@
     Plug 'tpope/vim-bundler'
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'easymotion/vim-easymotion'
+    Plug 'vim-airline/vim-airline'
 
     "Plug 'Valloric/YouCompleteMe', { 'do': 'make', 'for': 'cpp' }
     "autocmd! User YouCompleteMe if !has('vim_starting') | call youcompleteme#Enable() | endif
@@ -107,4 +104,8 @@
     map <C-n> :NERDTreeToggle<CR>
     " Close Vim if only window is NerdTREE
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" }
+
+" Airline {
+    let g:airline#extensions#tabline#enabled = 1
 " }
