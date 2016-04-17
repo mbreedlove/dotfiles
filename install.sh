@@ -20,5 +20,9 @@ for vimdir in "${VIM_DIRS[@]}"; do
 done
 vim +PlugInstall +qall
 
+echo "Installing tmux configuration..."
+for config in $(realpath ./tmux)/*; do
+  ln -s "$config" "${HOME}/.${config##*/}"
+done
 
 echo "Done!"
