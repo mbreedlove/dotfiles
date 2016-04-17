@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Linux does this right, OS X needs this shim
 command -v realpath >/dev/null 2>&1 || realpath() {
     [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
 }
