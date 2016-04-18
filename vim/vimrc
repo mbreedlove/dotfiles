@@ -13,6 +13,7 @@
     Plug 'easymotion/vim-easymotion'
     Plug 'vim-airline/vim-airline'
     Plug 'terryma/vim-multiple-cursors'
+    Plug 'valloric/youcompleteme', { 'do': './install.py' }
 
     Plug 'tpope/vim-fugitive'
     Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -39,6 +40,7 @@
 
 " General {
     filetype plugin indent on  " load filetype plugins/indent settings
+    set omnifunc=syntaxcomplete#Complete
     "set autochdir                     " always switch to the current file directory
     set backspace=indent,eol,start    " make backspace a more flexible
     set backup                        " make backup files
