@@ -14,7 +14,7 @@ for rcfile in "${HOME}"/.zprezto/runcoms/!(README.md); do
 done
 
 rm -f ~/.zshrc
-ln -s "$(realpath ./zsh/zshrc) "${HOME}/.zshrc"
+ln -s "$(realpath ./zsh/zshrc)" "${HOME}/.zshrc"
 
 echo "Installing Vim configuration and plugins..."
 VIM_DIRS=( backup tmp )
