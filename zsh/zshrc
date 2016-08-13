@@ -19,7 +19,9 @@ prompt agnoster
 alias vi=vim
 
 # load rbenv
-eval "$(rbenv init -)"
+if hash rbenv 2>/dev/null; then
+  eval "$(rbenv init -)"
+fi
 
 # Homebrew GitHub API Token
 export HOMEBREW_GITHUB_API_TOKEN="126bc8ac05de359af0f9861043d268c4c27e2769"
