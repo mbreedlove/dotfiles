@@ -13,6 +13,9 @@ for rcfile in "${HOME}"/.zprezto/runcoms/!(README.md); do
     ln -s "$rcfile" "${HOME}/.${rcfile##*/}"
 done
 
+rm -f ~/.zshrc
+ln -s "$(realpath ./zsh/zshrc) "${HOME}/.zshrc"
+
 echo "Installing Vim configuration and plugins..."
 VIM_DIRS=( backup tmp )
 ln -s $(realpath ./vim) "${HOME}/.vim"
@@ -29,6 +32,6 @@ done
 echo "Installing git configuration..."
 for config in $(realpath ./git)/*; do
   ln -s "$config" "${HOME}/.${config##*/}"
-end
+done
 
 echo "Done!"

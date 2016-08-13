@@ -1,127 +1,140 @@
-" Plugins {
-    if empty(glob('~/.vim/autoload/plug.vim'))
-      silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-            \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-      autocmd VimEnter * PlugInstall | source $MYVIMRC
-    endif
+""" Plugins
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
 
-    call plug#begin()
+call plug#begin()
+" Language
+Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-bundler'
+Plug 'elixir-lang/vim-elixir'
+Plug 'mattn/emmet-vim'
+Plug 'leafgarland/typescript-vim'
+Plug 'elzr/vim-json'
 
-    Plug 'tpope/vim-sensible'
-    Plug 'scrooloose/nerdtree'
-    Plug 'ctrlpvim/ctrlp.vim'
-    Plug 'easymotion/vim-easymotion'
-    Plug 'vim-airline/vim-airline'
-    Plug 'terryma/vim-multiple-cursors'
-    Plug 'valloric/youcompleteme', { 'do': './install.py' }
+" Completion
+Plug 'tpope/vim-endwise'
 
-    Plug 'tpope/vim-fugitive'
-    Plug 'Xuyuanp/nerdtree-git-plugin'
-    Plug 'airblade/vim-gitgutter'
+" Code Display
+Plug 'altercation/vim-colors-solarized'
 
-    Plug 'mattn/emmet-vim'
+" Integrations
+Plug 'rking/ag.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 
-    Plug 'vim-ruby/vim-ruby'
-    Plug 'tpope/vim-rails'
-    Plug 'tpope/vim-bundler'
+" Interface
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'vim-airline/vim-airline'
 
-    " Colorschemes
-    Plug 'altercation/vim-colors-solarized'
+" Commands
+Plug 'terryma/vim-multiple-cursors'
+Plug 'easymotion/vim-easymotion'
 
-    call plug#end()
-" }
+" Other
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-sleuth'
+Plug 'vim-scripts/HTML-AutoCloseTag'
 
-" Basics {
-    set nocompatible     " explicitly get out of vi-compatible mode
-    set noexrc       " don't use local version of .(g)vimrc, .exrc
-    set background=dark     " we plan to use a dark background
-    syntax on       " syntax highlighting on
-" }
+call plug#end()
+
+""" Basics
+set nocompatible     " explicitly get out of vi-compatible mode
+set noexrc       " don't use local version of .(g)vimrc, .exrc
+set background=dark     " we plan to use a dark background
+syntax on       " syntax highlighting on
 
 " General {
-    filetype plugin indent on  " load filetype plugins/indent settings
-    set omnifunc=syntaxcomplete#Complete
-    "set autochdir                     " always switch to the current file directory
-    set backspace=indent,eol,start    " make backspace a more flexible
-    set backup                        " make backup files
-    set backupdir=~/.vim/backup  " where to put backup files
-    set clipboard+=unnamed     " share windows clipboard
-    set directory=~/.vim/tmp   " directory to place swap files in
-    set fileformats=unix,dos,mac   " support all three, in this order
-    set hidden       " you can change buffers without saving
-    " (XXX: #VIM/tpope warns the line below could break things)
-    if has('mouse')
-        set mouse=a       " use mouse everywhere
-    endif
-    set noerrorbells     " don't make noise
-    " Open each file in its own tab/buffer
-" }
+filetype plugin indent on  " load filetype plugins/indent settings
+" set omnifunc=syntaxcomplete#Complete
+set backspace=indent,eol,start    " make backspace a more flexible
+set backup                        " make backup files
+set backupdir=~/.vim/backup  " where to put backup files
+set clipboard+=unnamed     " share windows clipboard
+set directory=~/.vim/tmp   " directory to place swap files in
+set fileformats=unix,dos,mac   " support all three, in this order
+set hidden       " you can change buffers without saving
+if has('mouse')
+  set mouse=a       " use mouse everywhere
+endif
+set noerrorbells     " don't make noise
 
-" Vim UI {
-    let g:solarized_termcolors=256
-    colorscheme solarized
-    set linespace=0              " don't insert any extra pixel lines betweens rows
-   "set list                     " we do what to show tabs, to ensure we get them out of my files
-   "set listchars=tab:>-,trail:- " show tabs and trailing
-    set matchtime=5              " how many tenths of a second to blink matching brackets for
-    set nohlsearch               " do not highlight searched for phrases
-    set incsearch                " DO highlight first term as you type
-    set nostartofline            " leave my cursor where it was
-    set novisualbell             " don't blink
-    set number                   " turn on line numbers
-    set numberwidth=4            " We are good up to 9999 lines
-    set report=0                 " tell us when anything is changed via :...
-    set ruler                    " Always show current positions along the bottom
-    set scrolloff=5              " Keep 10 lines (top/bottom) for scope
-    set shortmess=aOstT          " shortens messages to avoid 'press a key' prompt
-    set showcmd                  " show the command being typed
-    set showmatch                " show matching brackets
-    set sidescrolloff=10         " Keep 5 lines at the size
-    
-" }
+""" Vim UI
+let g:solarized_termcolors=16
+colorscheme solarized
+set linespace=0              " don't insert any extra pixel lines betweens rows
+"set list                     " we do what to show tabs, to ensure we get them out of my files
+"set listchars=tab:>-,trail:- " show tabs and trailing
+set matchtime=5              " how many tenths of a second to blink matching brackets for
+set nohlsearch               " do not highlight searched for phrases
+set incsearch                " DO highlight first term as you type
+set nostartofline            " leave my cursor where it was
+set visualbell t_vb=
+set number                   " turn on line numbers
+set numberwidth=4            " We are good up to 9999 lines
+set report=0                 " tell us when anything is changed via :...
+set ruler                    " Always show current positions along the bottom
+set scrolloff=5              " Keep 10 lines (top/bottom) for scope
+set shortmess=aOstT          " shortens messages to avoid 'press a key' prompt
+set showcmd                  " show the command being typed
+set showmatch                " show matching brackets
+set sidescrolloff=10         " Keep 5 lines at the size
 
-" Text Formatting/Layout {
-    set completeopt=     " don't use a pop up menu for completions
-    set expandtab       " no real tabs please!
-    set formatoptions=rq     " Automatically insert comment leader on return, and let gq format comments
-    set ignorecase       " case insensitive by default
-    set infercase       " case inferred by default
-    set nowrap       " do not wrap line
-    set shiftround       " when at 3 spaces, and I hit > ... go to 4, not 5
-    set smartcase       " if there are caps, go case-sensitive
-    set smartindent     " set smartindent
-    set shiftwidth=2     " auto-indent amount when using cindent, >>, << and stuff like that
-    set softtabstop=2     " when hitting tab or backspace, how many spaces should a tab be (see expandtab)
-    set tabstop=4 " real tabs should be 8, and they will show with set list on
-" }
 
-" Mappings {
-    " Buffers
-    nmap  <F7>  :bprevious<CR>     " <F7> is previous buffer
-    nmap  <F8>  :bnext<CR>    " <F8> is next buffer
+""" Text Formatting/Layout
+set completeopt=     " don't use a pop up menu for completions
+set expandtab       " no real tabs please!
+set formatoptions=rq     " Automatically insert comment leader on return, and let gq format comments
+set ignorecase       " case insensitive by default
+set infercase       " case inferred by default
+set nowrap       " do not wrap line
+set shiftround       " when at 3 spaces, and I hit > ... go to 4, not 5
+set smartcase       " if there are caps, go case-sensitive
+set smartindent     " set smartindent
+set shiftwidth=2     " auto-indent amount when using cindent, >>, << and stuff like that
+set softtabstop=2     " when hitting tab or backspace, how many spaces should a tab be (see expandtab)
+set tabstop=4 " real tabs should be 8, and they will show with set list on
 
-    set pastetoggle=<F2>                        " <F2> toggles paste mode
-" }
+""" Mappings
+" Buffers
+nmap <leader>T  :enew<CR>   " Open new buffer
+nmap <leader>l  :bnext<CR>  " Next buffer
+nmap <leader>h  :bprev<CR>  " Previous buffer
+" Emulate 'closing' the tab
+nmap <leader>bq :bprev <BAR> bdelete #<CR>
 
-" NerdTREE {
-    " Open NerdTREE if no files specified
+set pastetoggle=<F2>                        " <F2> toggles paste mode
+
+""" NerdTREE
+" Open NerdTREE if no files specified
 "   autocmd StdinReadPre * let s:std_in=1
 "   autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-    " NerdTREE key binding
-    map <C-f> :NERDTreeToggle<CR>
-    " Close Vim if only window is NerdTREE
-    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-" }
+" NerdTREE key binding
+map <C-f> :NERDTreeToggle<CR>
+" Close Vim if only window is NerdTREE
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" Airline {
-    let g:airline#extensions#tabline#enabled = 1
-" }
+""" CtrlP
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_custom_ignore = '\v[\/](\.(git|hg|svn)|node_modules|jspm_packages)$'
 
-" Multiple Cursors {
-    let g:multi_cursor_use_default_mapping=0
+""" Airline
+let g:airline#extensions#tabline#enabled = 1
 
-    let g:multi_cursor_next_key='<C-n>'
-    let g:multi_cursor_prev_key='<C-p>'
-    let g:multi_cursor_skip_key='<C-x>'
-    let g:multi_cursor_quit_key='<Esc>'
-" }
+""" Multiple Cursors
+let g:multi_cursor_use_default_mapping=0
+let g:multi_cursor_next_key='<C-n>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
+
+""" Emmet
+let g:user_emmet_install_global = 0
+autocmd FileType html,css,htmldjango,scss,eruby,less EmmetInstall
+let g:user_emmet_expandabbr_key = '<Tab>' " Tab expands tags
+let g:user_emmet_mode='a'    "enable all function in all mode.
