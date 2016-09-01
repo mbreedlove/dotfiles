@@ -11,6 +11,7 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-bundler'
 Plug 'elixir-lang/vim-elixir'
+Plug 'slashmili/alchemist.vim'
 Plug 'mattn/emmet-vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'elzr/vim-json'
@@ -22,7 +23,7 @@ Plug 'tpope/vim-endwise'
 Plug 'altercation/vim-colors-solarized'
 
 " Integrations
-Plug 'rking/ag.vim'
+Plug 'mileszs/ack.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-fugitive'
@@ -104,7 +105,7 @@ set tabstop=4 " real tabs should be 8, and they will show with set list on
 " Buffers
 nmap <leader>T  :enew<CR>   " Open new buffer
 nmap <leader>l  :bnext<CR>  " Next buffer
-nmap <leader>h  :bprev<CR>  " Previous buffer
+nmap <leader>hh  :bprev<CR>  " Previous buffer
 " Emulate 'closing' the tab
 nmap <leader>bq :bprev <BAR> bdelete #<CR>
 
@@ -135,6 +136,12 @@ let g:multi_cursor_quit_key='<Esc>'
 
 """ Emmet
 let g:user_emmet_install_global = 0
-autocmd FileType html,css,htmldjango,scss,eruby,less EmmetInstall
+autocmd FileType html,css,htmldjango,scss,eruby,less,eelixir EmmetInstall
 let g:user_emmet_expandabbr_key = '<Tab>' " Tab expands tags
 let g:user_emmet_mode='a'    "enable all function in all mode.
+
+""" Ack
+" Detect the_silver_searcher
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
