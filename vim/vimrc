@@ -18,6 +18,7 @@ Plug 'elzr/vim-json'
 
 " Completion
 Plug 'tpope/vim-endwise'
+Plug 'townk/vim-autoclose'
 
 " Code Display
 Plug 'altercation/vim-colors-solarized'
