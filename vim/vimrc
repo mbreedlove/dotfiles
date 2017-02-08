@@ -112,6 +112,7 @@ nmap <leader>hh  :bprev<CR>  " Previous buffer
 nmap <leader>bq :bprev <BAR> bdelete #<CR>
 
 set pastetoggle=<F2>                        " <F2> toggles paste mode
+set t_BE=            " Don't show annoying <PasteStart> and <PasteEnd> tags
 
 """ NerdTREE
 " Open NerdTREE if no files specified
