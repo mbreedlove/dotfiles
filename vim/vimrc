@@ -15,6 +15,7 @@ Plug 'slashmili/alchemist.vim'
 Plug 'mattn/emmet-vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'elzr/vim-json'
+Plug 'vim-syntastic/syntastic'
 
 " Completion
 Plug 'tpope/vim-endwise'
