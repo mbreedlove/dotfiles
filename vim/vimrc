@@ -15,11 +15,12 @@ Plug 'slashmili/alchemist.vim'
 Plug 'mattn/emmet-vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'elzr/vim-json'
-Plug 'vim-syntastic/syntastic'
+"Plug 'vim-syntastic/syntastic'
 
 " Completion
 Plug 'tpope/vim-endwise'
-Plug 'townk/vim-autoclose'
+"Plug 'townk/vim-autoclose'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 
 " Code Display
 Plug 'altercation/vim-colors-solarized'
