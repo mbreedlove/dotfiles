@@ -108,9 +108,9 @@ set tabstop=4 " real tabs should be 8, and they will show with set list on
 " Buffers
 nmap <leader>T  :enew<CR>   " Open new buffer
 nmap <leader>l  :bnext<CR>  " Next buffer
-nmap <leader>hh  :bprev<CR>  " Previous buffer
+nmap <leader>h  :bprev<CR>  " Previous buffer
 " Emulate 'closing' the tab
-nmap <leader>bq :bprev <BAR> bdelete #<CR>
+nmap <leader>q :bprev <BAR> bdelete #<CR>
 
 set pastetoggle=<F2>                        " <F2> toggles paste mode
 set t_BE=            " Don't show annoying <PasteStart> and <PasteEnd> tags
