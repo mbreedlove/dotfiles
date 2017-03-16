@@ -131,6 +131,10 @@ let g:ctrlp_custom_ignore = '\v[\/](\.(git|hg|svn)|node_modules|jspm_packages)$'
 """ Airline
 let g:airline#extensions#tabline#enabled = 1
 
+""" GitGutter
+" Don't set keymappings, use Fugitive for Git management
+let g:gitgutter_map_keys = 0
+
 """ Multiple Cursors
 let g:multi_cursor_use_default_mapping=0
 let g:multi_cursor_next_key='<C-n>'
