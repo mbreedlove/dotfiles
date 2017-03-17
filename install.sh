@@ -26,11 +26,12 @@ vim +PlugInstall +qall
 
 echo "Installing tmux configuration..."
 for config in $(realpath ./tmux)/*; do
-  ln -s "$config" "${HOME}/.${config##*/}"
+  ln -s "$config" "${HOME}/tmux/.${config##*/}"
 done
 
 echo "Installing tmux package manager..."
 git clone https://github.com/tmux-plugins/tpm "${HOME}/.tmux/plugins/tpm"
+tmux new-session \; run-shell "${HOME}/.tmux/plugins/tpm/bindings/install_plugins" \; kill-server
 
 echo "Installing git configuration..."
 for config in $(realpath ./git)/*; do
