@@ -29,6 +29,9 @@ for config in $(realpath ./tmux)/*; do
   ln -s "$config" "${HOME}/.${config##*/}"
 done
 
+echo "Installing tmux package manager..."
+git clone https://github.com/tmux-plugins/tpm "${HOME}/.tmux/plugins/tpm"
+
 echo "Installing git configuration..."
 for config in $(realpath ./git)/*; do
   ln -s "$config" "${HOME}/.${config##*/}"
