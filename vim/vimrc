@@ -127,6 +127,9 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 """ CtrlP
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_custom_ignore = '\v[\/](\.(git|hg|svn)|node_modules|jspm_packages)$'
+if executable('ag')
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+endif
 
 """ Airline
 let g:airline#extensions#tabline#enabled = 1
