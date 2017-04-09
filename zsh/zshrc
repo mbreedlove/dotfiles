@@ -24,4 +24,7 @@ elif [[ "$OSTYPE" == "darwin" ]]; then
   export NVM_BIN="nvm.sh"
 fi
 
+# Homebrew GitHub API Token
+export HOMEBREW_GITHUB_API_TOKEN="ddb7f64ac841a77e72fbf366e346450a5fc40528"
+
 [ -s "$NVM_DIR/$NVM_BIN" ] && . "$NVM_DIR/$NVM_BIN" # Load Node Version Manager
