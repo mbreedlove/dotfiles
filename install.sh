@@ -38,4 +38,11 @@ for config in $(realpath ./git)/*; do
   ln -s "$config" "${HOME}/.${config##*/}"
 done
 
+echo "Installing Powerline fonts..."
+git clone https://github.com/powerline/fonts.git
+cd fonts/
+./install.sh
+cd ..
+rm -rf fonts
+
 echo "Done!"
