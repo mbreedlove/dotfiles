@@ -14,8 +14,11 @@ Plug 'elixir-lang/vim-elixir'
 Plug 'slashmili/alchemist.vim'
 Plug 'mattn/emmet-vim'
 Plug 'leafgarland/typescript-vim'
+"Plug 'clausreinke/typescript-tools.vim'
 Plug 'elzr/vim-json'
-"Plug 'vim-syntastic/syntastic'
+Plug 'glanotte/vim-jasmine'
+Plug 'Quramy/tsuquyomi'
+Plug 'vim-syntastic/syntastic'
 
 " Completion
 Plug 'tpope/vim-endwise'
@@ -125,10 +128,14 @@ map <C-f> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 """ CtrlP
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_custom_ignore = '\v[\/](\.(git|hg|svn)|node_modules|jspm_packages)$'
+"let g:ctrlp_show_hidden = 1
+"let g:ctrlp_custom_ignore = '\v[\/](\.(git|hg|svn)|node_modules|jspm_packages)$'
+let g:ctrlp_working_path_mode = 'ra'
 if executable('ag')
-  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+  let g:ctrlp_user_command = ['ag %s --files-with-matches -g ""']
+  let g:ctrlp_user_command += ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+
+  let g:ctrlp_use_caching = 0
 endif
 
 """ Airline
@@ -151,6 +158,9 @@ autocmd FileType html,css,htmldjango,scss,eruby,less,eelixir EmmetInstall
 let g:user_emmet_expandabbr_key = '<Tab>' " Tab expands tags
 let g:user_emmet_mode='a'    "enable all function in all mode.
 
+" Vim-Jasmine
+autocmd BufReadPost,BufNewFile *.spec.ts set filetype=jasmine.javascript syntax=jasmine
+
 """ Ack
 " Detect the_silver_searcher
 if executable('ag')
@@ -165,3 +175,20 @@ else
     let &t_SI = "\<Esc>]50;CursorShape=1\x7"
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
+
+" random shit
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:tsuquyomi_disable_quickfix = 1
+let g:syntastic_typescript_checkers = ['tsuquyomi'] 
+
+if !exists("g:ycm_semantic_triggers")
+     let g:ycm_semantic_triggers = {}
+endif
+
+let g:ycm_semantic_triggers['typescript'] = ['.']
+let g:tsuquyomi_completion_detail = 1
+let g:NERDTreeWinSize = 40 
