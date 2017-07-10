@@ -19,6 +19,7 @@ Plug 'elzr/vim-json'
 Plug 'glanotte/vim-jasmine'
 Plug 'Quramy/tsuquyomi'
 Plug 'vim-syntastic/syntastic'
+Plug 'scrooloose/nerdcommenter'
 
 " Completion
 Plug 'tpope/vim-endwise'
