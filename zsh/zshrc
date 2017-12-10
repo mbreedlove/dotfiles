@@ -10,12 +10,13 @@ prompt agnoster
 export EDITOR=vim
 export TERMINAL=termite
 alias vi=vim
+# Preserve environment when sudoing
+alias sudo=sudo -E
 
 # load rbenv
 if hash rbenv 2>/dev/null; then
   eval "$(rbenv init -)"
 fi
-
   export NVM_DIR="$HOME/.nvm"
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   export NVM_BIN="/usr/share/nvm/init-nvm.sh"
