@@ -26,7 +26,7 @@ vim +PlugInstall +qall
 
 echo "Installing tmux configuration..."
 for config in $(realpath ./tmux)/*; do
-  ln -s "$config" "${HOME}/tmux/.${config##*/}"
+  ln -s "$config" "${HOME}/.${config##*/}"
 done
 
 echo "Installing tmux package manager..."
