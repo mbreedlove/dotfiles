@@ -5,7 +5,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 
-call plug#begin()
+call plug#begin('~/.vim/plugged')
 " Language
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
@@ -14,7 +14,6 @@ Plug 'elixir-lang/vim-elixir'
 Plug 'slashmili/alchemist.vim'
 Plug 'mattn/emmet-vim'
 Plug 'leafgarland/typescript-vim'
-"Plug 'clausreinke/typescript-tools.vim'
 Plug 'elzr/vim-json'
 Plug 'glanotte/vim-jasmine'
 Plug 'Quramy/tsuquyomi'
@@ -24,7 +23,7 @@ Plug 'scrooloose/nerdcommenter'
 " Completion
 Plug 'tpope/vim-endwise'
 "Plug 'townk/vim-autoclose'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer --system-libclang' }
 
 " Code Display
 Plug 'altercation/vim-colors-solarized'
@@ -48,6 +47,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-sleuth'
 Plug 'vim-scripts/HTML-AutoCloseTag'
+Plug 'editorconfig/editorconfig-vim'
 
 call plug#end()
 
@@ -129,8 +129,6 @@ map <C-f> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 """ CtrlP
-"let g:ctrlp_show_hidden = 1
-"let g:ctrlp_custom_ignore = '\v[\/](\.(git|hg|svn)|node_modules|jspm_packages)$'
 let g:ctrlp_working_path_mode = 'ra'
 
 " The Silver Searcher
@@ -145,13 +143,6 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
-"if executable('ag')
-  "let g:ctrlp_user_command = ['ag %s --files-with-matches -g ""']
-  "let g:ctrlp_user_command += ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-
-  "let g:ctrlp_use_caching = 0
-"endif
-
 """ Airline
 let g:airline#extensions#tabline#enabled = 1
 
@@ -165,6 +156,8 @@ let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
+" Allows exiting back to normal mode rather than exiting multi_cursor
+let g:multi_cursor_exit_from_insert_mode=0
 
 """ Emmet
 let g:user_emmet_install_global = 0
@@ -191,18 +184,30 @@ else
 endif
 
 " random shit
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:tsuquyomi_disable_quickfix = 1
+let g:tsuquyomi_single_quote_import=1
 let g:syntastic_typescript_checkers = ['tsuquyomi'] 
 
 if !exists("g:ycm_semantic_triggers")
-     let g:ycm_semantic_triggers = {}
+  let g:ycm_semantic_triggers =  {
+        \   'c' : ['->', '.'],
+        \   'objc' : ['->', '.'],
+        \   'ocaml' : ['.', '#'],
+        \   'cpp,objcpp' : ['->', '.', '::'],
+        \   'perl' : ['->'],
+        \   'php' : ['->', '::', '"', "'", 'use ', 'namespace ', '\'],
+        \   'cs,jasmine,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+        \   'html': ['<', '"', '</', ' '],
+        \   'vim' : ['re![_a-za-z]+[_\w]*\.'],
+        \   'ruby' : ['.', '::'],
+        \   'lua' : ['.', ':'],
+        \   'erlang' : [':'],
+        \   'haskell' : ['.', 're!.']
+        \ }
 endif
-
-let g:ycm_semantic_triggers['typescript'] = ['.']
-let g:tsuquyomi_completion_detail = 1
 let g:NERDTreeWinSize = 40 

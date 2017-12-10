@@ -23,6 +23,9 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
   export NVM_BIN="/usr/local/opt/nvm/nvm.sh"
 fi
 
+# Add yarn global to path
+export PATH="$(yarn global bin):$PATH"
+
 # Vi Mode
 bindkey -v
 
