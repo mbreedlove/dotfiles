@@ -146,6 +146,7 @@ endif
 
 """ Airline
 let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 
 """ GitGutter
 " Don't set keymappings, use Fugitive for Git management
