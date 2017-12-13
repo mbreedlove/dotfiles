@@ -8,7 +8,7 @@ if &compatible
 endif
 set noexrc       " don't use local version of .(g)vimrc, .exrc
 set background=dark     " we plan to use a dark background
-set runtimepath+=~/.config/nvim/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
 
 """ Dein
 if dein#load_state('~/.config/nvim/dein')
@@ -66,18 +66,17 @@ if dein#load_state('~/.config/nvim/dein')
   call dein#add('editorconfig/editorconfig-vim')
 
   if has('nvim')
-    " Neovim specific stuf
+    " Neovim specific stuff
   endif
 
   call dein#end()
   call dein#save_state()
+
+  " If you want to install not installed plugins on startup.
+  if dein#check_install()
+    call dein#install()
+  endif
 endif
-
-" If you want to install not installed plugins on startup.
-"if dein#check_install()
-"  call dein#install()
-"endif
-
 
 " General {
 filetype plugin indent on  " load filetype plugins/indent settings

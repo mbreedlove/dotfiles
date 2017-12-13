@@ -2,7 +2,7 @@
 
 # Linux does this right, OS X needs this shim
 command -v realpath >/dev/null 2>&1 || realpath() {
-    [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
+[[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
 }
 
 ##
@@ -11,28 +11,39 @@ command -v realpath >/dev/null 2>&1 || realpath() {
 echo "Installing Zsh configuration..."
 mkdir -p $HOME/.zsh
 for config in $(realpath ./zsh)/*; do
-  ln -s "$config" "${HOME}/.${config##*/}"
+	ln -s "$config" "${HOME}/.${config##*/}"
 done
 
-echo "Installing Antigen..."
-git clone https://github.com/zsh-users/antigen.git $HOME/.antigen
+if [ ! -d $HOME/.antigen ]; then
+	echo "Installing Antigen..."
+	git clone https://github.com/zsh-users/antigen.git $HOME/.antigen
+fi
 
 ##
 ## Vim
 ##
-NVIM_DIR=$HOME/.config/nvim
 echo "Installing Vim configuration and plugins..."
 
-mkdir -p $NVIM_DIR
+VIM_DIR=$HOME/.vim
+mkdir -p $VIM_DIR
+mkdir -p $HOME/.config/nvim
 
 # install init.vim
-ln -s $(realpath ./nvim)/init.vim $NVIM_DIR/init.vim
+ln -s $(realpath ./nvim)/init.vim $HOME/.config/nvim/init.vim
+ln -s $HOME/.config/nvim/init.vim $HOME/.vimrc
 
 # install dein.vim
-mkdir -p $NVIM_DIR/dein/repos/github.com/Shougo/dein.vim #recommended path
+mkdir -p $VIM_DIR/dein/repos/github.com/Shougo/dein.vim #recommended path
 git clone https://github.com/Shougo/dein.vim.git \
-    $NVIM_DIR/dein/repos/github.com/Shougo/dein.vim
+	$VIM_DIR/dein/repos/github.com/Shougo/dein.vim
 
+# Make required directories
+VIM_DIRS=( backup tmp )
+for vimdir in "${VIM_DIRS[@]}"; do
+	mkdir -p "${VIM_DIR}/$vimdir"
+done
+
+#vim +PlugInstall +qall
 #nvim -c "call dein#install()"
 
 ##
@@ -40,7 +51,7 @@ git clone https://github.com/Shougo/dein.vim.git \
 ##
 echo "Installing tmux configuration..."
 for config in $(realpath ./tmux)/*; do
-  ln -s "$config" "${HOME}/.${config##*/}"
+	ln -s "$config" "${HOME}/.${config##*/}"
 done
 
 echo "Installing tmux package manager..."
@@ -52,7 +63,7 @@ tmux new-session \; run-shell "${HOME}/.tmux/plugins/tpm/bindings/install_plugin
 ##
 echo "Installing git configuration..."
 for config in $(realpath ./git)/*; do
-  ln -s "$config" "${HOME}/.${config##*/}"
+	ln -s "$config" "${HOME}/.${config##*/}"
 done
 
 ##
