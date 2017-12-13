@@ -26,5 +26,9 @@ if hash vim 2>/dev/null; then
   alias vi=vim
 fi
 
+if hash nvim 2>/dev/null; then
+  alias vim=nvim
+fi
+
 # Preserve environment when sudoing
 alias sudo=sudo -E

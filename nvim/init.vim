@@ -1,71 +1,92 @@
-""" Plugins
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall | source $MYVIMRC
+if &compatible
+  set nocompatible               " Be iMproved
 endif
-
-call plug#begin('~/.vim/plugged')
-" Language
-Plug 'vim-ruby/vim-ruby'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-bundler'
-Plug 'elixir-lang/vim-elixir'
-Plug 'slashmili/alchemist.vim'
-Plug 'mattn/emmet-vim'
-Plug 'leafgarland/typescript-vim'
-Plug 'elzr/vim-json'
-Plug 'glanotte/vim-jasmine'
-Plug 'Quramy/tsuquyomi'
-Plug 'vim-syntastic/syntastic'
-Plug 'scrooloose/nerdcommenter'
-Plug 'julialang/julia-vim'
-
-" Completion
-Plug 'tpope/vim-endwise'
-"Plug 'townk/vim-autoclose'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer --system-libclang' }
-
-" Code Display
-Plug 'altercation/vim-colors-solarized'
-
-" Integrations
-Plug 'mileszs/ack.vim'
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-
-" Interface
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'vim-airline/vim-airline'
-
-" Commands
-Plug 'terryma/vim-multiple-cursors'
-Plug 'easymotion/vim-easymotion'
-
-" Other
-Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-sleuth'
-Plug 'vim-scripts/HTML-AutoCloseTag'
-Plug 'editorconfig/editorconfig-vim'
-
-call plug#end()
-
 """ Basics
-set nocompatible     " explicitly get out of vi-compatible mode
+syntax enable       " syntax highlighting on
+if &compatible
+  set nocompatible     " explicitly get out of vi-compatible mode
+endif
 set noexrc       " don't use local version of .(g)vimrc, .exrc
 set background=dark     " we plan to use a dark background
-syntax on       " syntax highlighting on
+set runtimepath+=~/.config/nvim/dein/repos/github.com/Shougo/dein.vim
+
+""" Dein
+if dein#load_state('~/.config/nvim/dein')
+  call dein#begin('~/.config/nvim/dein')
+
+  " Let dein manage dein
+  call dein#add('Shougo/dein.vim')
+
+  "" Language
+  " " Ruby
+  call dein#add('vim-ruby/vim-ruby', { 'on_ft': 'ruby' })
+  call dein#add('tpope/vim-rails', { 'on_ft': 'ruby' })
+  call dein#add('tpope/vim-bundler', { 'on_ft': 'ruby' })
+  " " Elixir
+  call dein#add('elixir-editors/vim-elixir', { 'on_ft': 'elixir' })
+  call dein#add('slashmili/alchemist.vim', { 'on_ft': 'elixir' })
+  " " Javascript
+  call dein#add('leafgarland/typescript-vim', { 'on_ft': 'typescript' })
+  call dein#add('Quramy/tsuquyomi', { 'on_ft': 'typescript' })
+  call dein#add('glanotte/vim-jasmine', { 'on_ft': 'jasmine' })
+  call dein#add('elzr/vim-json', { 'on_ft': 'json' })
+
+  call dein#add('mattn/emmet-vim', { 'on_ft': 'html' })
+  call dein#add('vim-syntastic/syntastic')
+  call dein#add('scrooloose/nerdcommenter')
+  "call dein#add('julialang/julia-vim', { 'on_ft': 'julia' })
+
+  " Completion
+  call dein#add('tpope/vim-endwise', { 'on_i': 1 })
+  call dein#add('townk/vim-autoclose', { 'on_i': 1 })
+  call dein#add('Valloric/YouCompleteMe', { 'on_i': 1, 'build': './install.sh --clang-completer --system-libclang' })
+
+  " Code Display
+  call dein#add('altercation/vim-colors-solarized')
+
+  " Integrations
+  call dein#add('mileszs/ack.vim', { 'on_cmd': 'Ack' })
+  call dein#add('scrooloose/nerdtree', { 'on_cmd': 'NerdTreeToggle' })
+  call dein#add('Xuyuanp/nerdtree-git-plugin', { 'on_cmd': 'NerdTreeToggle' })
+  call dein#add('tpope/vim-fugitive')
+  call dein#add('airblade/vim-gitgutter')
+
+  " Interface
+  call dein#add('ctrlpvim/ctrlp.vim', { 'on_cmd': 'CtrlP' })
+  call dein#add('vim-airline/vim-airline')
+
+  " Commands
+  call dein#add('terryma/vim-multiple-cursors')
+  call dein#add('easymotion/vim-easymotion')
+
+  " Other
+  call dein#add('tpope/vim-sensible')
+  call dein#add('tpope/vim-sleuth')
+  call dein#add('vim-scripts/HTML-AutoCloseTag', { 'on_ft': 'html' })
+  call dein#add('editorconfig/editorconfig-vim')
+
+  if has('nvim')
+    " Neovim specific stuf
+  endif
+
+  call dein#end()
+  call dein#save_state()
+endif
+
+" If you want to install not installed plugins on startup.
+"if dein#check_install()
+"  call dein#install()
+"endif
+
 
 " General {
 filetype plugin indent on  " load filetype plugins/indent settings
 " set omnifunc=syntaxcomplete#Complete
 set backspace=indent,eol,start    " make backspace a more flexible
 set backup                        " make backup files
-set backupdir=~/.vim/backup  " where to put backup files
+"set backupdir=~/.vim/backup  " where to put backup files
 set clipboard+=unnamed     " share windows clipboard
-set directory=~/.vim/tmp   " directory to place swap files in
+"set directory=~/.vim/tmp   " directory to place swap files in
 set fileformats=unix,dos,mac   " support all three, in this order
 set hidden       " you can change buffers without saving
 if has('mouse')
@@ -197,19 +218,19 @@ let g:syntastic_typescript_checkers = ['tsuquyomi']
 
 if !exists("g:ycm_semantic_triggers")
   let g:ycm_semantic_triggers =  {
-        \   'c' : ['->', '.'],
-        \   'objc' : ['->', '.'],
-        \   'ocaml' : ['.', '#'],
-        \   'cpp,objcpp' : ['->', '.', '::'],
-        \   'perl' : ['->'],
-        \   'php' : ['->', '::', '"', "'", 'use ', 'namespace ', '\'],
-        \   'cs,jasmine,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-        \   'html': ['<', '"', '</', ' '],
-        \   'vim' : ['re![_a-za-z]+[_\w]*\.'],
-        \   'ruby' : ['.', '::'],
-        \   'lua' : ['.', ':'],
-        \   'erlang' : [':'],
-        \   'haskell' : ['.', 're!.']
-        \ }
+	\   'c' : ['->', '.'],
+	\   'objc' : ['->', '.'],
+	\   'ocaml' : ['.', '#'],
+	\   'cpp,objcpp' : ['->', '.', '::'],
+	\   'perl' : ['->'],
+	\   'php' : ['->', '::', '"', "'", 'use ', 'namespace ', '\'],
+	\   'cs,jasmine,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+	\   'html': ['<', '"', '</', ' '],
+	\   'vim' : ['re![_a-za-z]+[_\w]*\.'],
+	\   'ruby' : ['.', '::'],
+	\   'lua' : ['.', ':'],
+	\   'erlang' : [':'],
+	\   'haskell' : ['.', 're!.']
+	\ }
 endif
 let g:NERDTreeWinSize = 40 
