@@ -1,36 +1,30 @@
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+if [[ -f $HOME/.antigen/antigen.zsh ]]; then
+  source $HOME/.antigen/antigen.zsh
+
+  # Load the oh-my-zsh's library.
+  antigen use oh-my-zsh
+
+  # Bundles from the default repo (robbyrussell's oh-my-zsh).
+  antigen bundle git
+  antigen bundle command-not-found
+  antigen bundle ssh-agent
+
+  # Syntax highlighting bundle.
+  antigen bundle zsh-users/zsh-syntax-highlighting
+
+  # Load the theme.
+  #antigen theme agnoster
+  antigen theme agnoster/agnoster-zsh-theme
+
+  # Tell Antigen that you're done.
+  antigen apply
 fi
 
-# Agnoster.zsh - requires powerline-patched font
-# https://github.com/powerline/fonts
-prompt agnoster
-
-export EDITOR=vim
-export TERMINAL=termite
-alias vi=vim
-# Preserve environment when sudoing
-alias sudo=sudo -E
-
-# load rbenv
-if hash rbenv 2>/dev/null; then
-  eval "$(rbenv init -)"
-fi
-  export NVM_DIR="$HOME/.nvm"
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  export NVM_BIN="/usr/share/nvm/init-nvm.sh"
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-  export NVM_BIN="/usr/local/opt/nvm/nvm.sh"
-fi
-
-# Add yarn global to path
-export PATH="$(yarn global bin):$PATH"
-
-# Vi Mode
 bindkey -v
 
-# Homebrew GitHub API Token
-export HOMEBREW_GITHUB_API_TOKEN="ddb7f64ac841a77e72fbf366e346450a5fc40528"
+if hash vim 2>/dev/null; then
+  alias vi=vim
+fi
 
-[ -s "$NVM_BIN" ] && . "$NVM_BIN" # Load Node Version Manager
+# Preserve environment when sudoing
+alias sudo=sudo -E
