@@ -82,6 +82,18 @@ export QT_SCALE_FACTOR=2
 
 if hash vim 2>/dev/null; then
   alias vi=vim
+  alias vim=vim
+
+  export EDITOR='vim -e'
+  export VISUAL='vim'
+fi
+
+if hash nvim 2>/dev/null; then
+  alias vi=nvim
+  alias vim=nvim
+
+  export EDITOR='nvim -e'
+  export VISUAL='nvim'
 fi
 
 # Preserve environment when sudoing

@@ -17,15 +17,7 @@ if [[ -f $HOME/.antigen/antigen.zsh ]]; then
   antigen apply
 fi
 
-#bindkey -v
-
-if hash vim 2>/dev/null; then
-  alias vi=vim
-fi
-
-if hash nvim 2>/dev/null; then
-  alias vim=nvim
-fi
+bindkey -v
 
 # Preserve environment when sudoing
 alias sudo=sudo -E
