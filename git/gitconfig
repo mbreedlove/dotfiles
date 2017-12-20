@@ -5,8 +5,6 @@
 [user]
 	name = Michael Breedlove
 	email = me@michaelbreedlove.net
-[core]
-	editor = vim
 [diff]
 	tool = vimdiff
 	algorithm = patience
