@@ -8,14 +8,17 @@ if &compatible
 endif
 set noexrc       " don't use local version of .(g)vimrc, .exrc
 set background=dark     " we plan to use a dark background
+filetype plugin indent on  " load filetype plugins/indent settings
 set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
 
 """ Dein
-if dein#load_state('~/.config/nvim/dein')
-  call dein#begin('~/.config/nvim/dein')
+if dein#load_state('~/.vim/dein')
+  call dein#begin('~/.vim/dein')
 
   " Let dein manage dein
   call dein#add('Shougo/dein.vim')
+
+  call dein#add('Shougo/vimproc.vim', { 'build': 'make' })
 
   "" Language
   " " Ruby
@@ -39,10 +42,11 @@ if dein#load_state('~/.config/nvim/dein')
   " Completion
   call dein#add('tpope/vim-endwise', { 'on_i': 1 })
   call dein#add('townk/vim-autoclose', { 'on_i': 1 })
-  call dein#add('Valloric/YouCompleteMe', { 'on_i': 1, 'build': './install.sh --clang-completer --system-libclang' })
+  call dein#add('Valloric/YouCompleteMe', { 'build': './install.py --all' })
 
   " Code Display
   call dein#add('altercation/vim-colors-solarized')
+  set runtimepath+=~/.vim/dein/repos/github.com/altercation/vim-colors-solarized
 
   " Integrations
   call dein#add('mileszs/ack.vim', { 'on_cmd': 'Ack' })
@@ -52,7 +56,8 @@ if dein#load_state('~/.config/nvim/dein')
   call dein#add('airblade/vim-gitgutter')
 
   " Interface
-  call dein#add('ctrlpvim/ctrlp.vim', { 'on_cmd': 'CtrlP' })
+  call dein#add('junegunn/fzf', { 'build': './install --all' })
+  call dein#add('junegunn/fzf.vim', { 'on_cmd': 'Files' })
   call dein#add('vim-airline/vim-airline')
 
   " Commands
@@ -79,13 +84,12 @@ if dein#load_state('~/.config/nvim/dein')
 endif
 
 " General {
-filetype plugin indent on  " load filetype plugins/indent settings
 " set omnifunc=syntaxcomplete#Complete
 set backspace=indent,eol,start    " make backspace a more flexible
 set backup                        " make backup files
-"set backupdir=~/.vim/backup  " where to put backup files
+set backupdir=~/.vim/backup  " where to put backup files
 set clipboard+=unnamed     " share windows clipboard
-"set directory=~/.vim/tmp   " directory to place swap files in
+set directory=~/.vim/tmp   " directory to place swap files in
 set fileformats=unix,dos,mac   " support all three, in this order
 set hidden       " you can change buffers without saving
 if has('mouse')
@@ -137,6 +141,9 @@ nmap <leader>h  :bprev<CR>  " Previous buffer
 " Emulate 'closing' the tab
 nmap <leader>q :bprev <BAR> bdelete #<CR>
 
+" CtrlP opens FZF
+nmap <C-p> :Files<CR>
+
 set pastetoggle=<F2>                        " <F2> toggles paste mode
 set t_BE=            " Don't show annoying <PasteStart> and <PasteEnd> tags
 
@@ -149,13 +156,13 @@ map <C-f> :NERDTreeToggle<CR>
 " Close Vim if only window is NerdTREE
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-""" CtrlP
-let g:ctrlp_working_path_mode = 'ra'
-
 " The Silver Searcher
 if executable('ag')
   " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag for Ack
+  let g:ackprg = 'ag --vimgrep'
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
@@ -190,12 +197,6 @@ let g:user_emmet_mode='a'    "enable all function in all mode.
 " Vim-Jasmine
 autocmd BufReadPost,BufNewFile *.spec.ts set filetype=jasmine.javascript syntax=jasmine
 
-""" Ack
-" Detect the_silver_searcher
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif
-
 " allows cursor change in tmux mode
 if exists('$TMUX')
     let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
@@ -205,10 +206,6 @@ else
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
-" random shit
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:tsuquyomi_disable_quickfix = 1
