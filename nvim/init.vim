@@ -84,7 +84,7 @@ if dein#load_state('~/.vim/dein')
 endif
 
 " General {
-" set omnifunc=syntaxcomplete#Complete
+set omnifunc=syntaxcomplete#Complete
 set backspace=indent,eol,start    " make backspace a more flexible
 set backup                        " make backup files
 set backupdir=~/.vim/backup  " where to put backup files
