@@ -29,22 +29,26 @@ if dein#load_state('~/.vim/dein')
   call dein#add('elixir-editors/vim-elixir', { 'on_ft': 'elixir' })
   call dein#add('slashmili/alchemist.vim', { 'on_ft': 'elixir' })
   " " Javascript
-  call dein#add('leafgarland/typescript-vim', { 'on_ft': 'typescript' })
+  "call dein#add('leafgarland/typescript-vim', { 'on_ft': 'typescript' })
+  call dein#add('HerringtonDarkholme/yats.vim', { 'on_ft': 'typescript' })
   call dein#add('Quramy/tsuquyomi', { 'on_ft': 'typescript' })
   call dein#add('glanotte/vim-jasmine', { 'on_ft': 'jasmine' })
   call dein#add('elzr/vim-json', { 'on_ft': 'json' })
 
   call dein#add('mattn/emmet-vim', { 'on_ft': 'html' })
-  call dein#add('vim-syntastic/syntastic')
+  "call dein#add('vim-syntastic/syntastic')
+  call dein#add('w0rp/ale')
   call dein#add('scrooloose/nerdcommenter')
   "call dein#add('julialang/julia-vim', { 'on_ft': 'julia' })
 
   " Completion
   call dein#add('tpope/vim-endwise', { 'on_i': 1 })
-  call dein#add('townk/vim-autoclose', { 'on_i': 1 })
+  "call dein#add('townk/vim-autoclose', { 'on_i': 1 })
+  call dein#add('Raimondi/delimitMate', { 'on_i': 1 })
   call dein#add('Valloric/YouCompleteMe', { 'build': './install.py --all' })
 
   " Code Display
+  call dein#add('nathanaelkane/vim-indent-guides')
   call dein#add('altercation/vim-colors-solarized')
   set runtimepath+=~/.vim/dein/repos/github.com/altercation/vim-colors-solarized
 
@@ -59,6 +63,7 @@ if dein#load_state('~/.vim/dein')
   call dein#add('junegunn/fzf', { 'build': './install --all' })
   call dein#add('junegunn/fzf.vim', { 'on_cmd': 'Files' })
   call dein#add('vim-airline/vim-airline')
+  call dein#add('vim-airline/vim-airline-themes')
 
   " Commands
   call dein#add('terryma/vim-multiple-cursors')
@@ -174,6 +179,10 @@ endif
 """ Airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
+let g:airline_theme = 'solarized'
+
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 
 """ GitGutter
 " Don't set keymappings, use Fugitive for Git management
@@ -192,7 +201,7 @@ let g:multi_cursor_exit_from_insert_mode=0
 let g:user_emmet_install_global = 0
 autocmd FileType html,css,htmldjango,scss,eruby,less,eelixir EmmetInstall
 let g:user_emmet_expandabbr_key = '<Tab>' " Tab expands tags
-let g:user_emmet_mode='a'    "enable all function in all mode.
+let g:user_emmet_mode='i'    "enable all function in all mode.
 
 " Vim-Jasmine
 autocmd BufReadPost,BufNewFile *.spec.ts set filetype=jasmine.javascript syntax=jasmine
@@ -206,12 +215,18 @@ else
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
+"let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let g:tsuquyomi_disable_quickfix = 1
-let g:tsuquyomi_single_quote_import=1
 let g:syntastic_typescript_checkers = ['tsuquyomi'] 
 
+let g:tsuquyomi_disable_quickfix = 1
+let g:tsuquyomi_single_quote_import=1
+
+" disable contextual completion
+"set complete=
+let g:ycm_autoclose_preview_window_after_completion=1
 if !exists("g:ycm_semantic_triggers")
   let g:ycm_semantic_triggers =  {
 	\   'c' : ['->', '.'],
@@ -230,3 +245,4 @@ if !exists("g:ycm_semantic_triggers")
 	\ }
 endif
 let g:NERDTreeWinSize = 40 
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
