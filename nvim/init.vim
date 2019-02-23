@@ -35,7 +35,6 @@ if dein#load_state('~/.vim/dein')
   call dein#add('glanotte/vim-jasmine', { 'on_ft': 'jasmine' })
   call dein#add('elzr/vim-json', { 'on_ft': 'json' })
   call dein#add('MaxMEllon/vim-jsx-pretty', { 'on_ft': 'javascript.jsx' })
-  call dein#add('briancollins/vim-jst')
 
   call dein#add('mattn/emmet-vim', { 'on_ft': 'html' })
   "call dein#add('vim-syntastic/syntastic')
@@ -47,7 +46,8 @@ if dein#load_state('~/.vim/dein')
   call dein#add('tpope/vim-endwise', { 'on_i': 1 })
   "call dein#add('townk/vim-autoclose', { 'on_i': 1 })
   call dein#add('Raimondi/delimitMate', { 'on_i': 1 })
-  call dein#add('Valloric/YouCompleteMe', { 'build': './install.py --all' })
+  call dein#add('Valloric/YouCompleteMe', { 'build': './install.py --system-libclang --all' })
+  call dein#add('briancollins/vim-jst')
 
   " Code Display
   call dein#add('nathanaelkane/vim-indent-guides')
@@ -203,8 +203,8 @@ let g:multi_cursor_exit_from_insert_mode=0
 """ Emmet
 let g:user_emmet_install_global = 0
 autocmd FileType html,css,htmldjango,scss,eruby,less,eelixir EmmetInstall
-let g:user_emmet_expandabbr_key = '<Tab>' " Tab expands tags
-let g:user_emmet_mode='i'    "enable all function in all mode.
+imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+let g:user_emmet_mode='i'    "enable function in insert mode
 
 " Vim-Jasmine
 autocmd BufReadPost,BufNewFile *.spec.ts set filetype=jasmine.javascript syntax=jasmine
