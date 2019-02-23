@@ -34,6 +34,8 @@ if dein#load_state('~/.vim/dein')
   call dein#add('Quramy/tsuquyomi', { 'on_ft': 'typescript' })
   call dein#add('glanotte/vim-jasmine', { 'on_ft': 'jasmine' })
   call dein#add('elzr/vim-json', { 'on_ft': 'json' })
+  call dein#add('MaxMEllon/vim-jsx-pretty', { 'on_ft': 'javascript.jsx' })
+  call dein#add('briancollins/vim-jst')
 
   call dein#add('mattn/emmet-vim', { 'on_ft': 'html' })
   "call dein#add('vim-syntastic/syntastic')
@@ -58,6 +60,7 @@ if dein#load_state('~/.vim/dein')
   call dein#add('Xuyuanp/nerdtree-git-plugin', { 'on_cmd': 'NerdTreeToggle' })
   call dein#add('tpope/vim-fugitive')
   call dein#add('airblade/vim-gitgutter')
+  call dein#add('prettier/vim-prettier')
 
   " Interface
   call dein#add('junegunn/fzf', { 'build': './install --all' })
@@ -246,3 +249,12 @@ if !exists("g:ycm_semantic_triggers")
 endif
 let g:NERDTreeWinSize = 40 
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+
+""" Prettier
+""" Change back to default prettier settings
+let g:prettier#config#single_quote = 'true'
+let g:prettier#config#bracket_spacing = 'true'
+let g:prettier#config#jsx_bracket_same_line = 'false'
+let g:prettier#config#arrow_parens = 'avoid'
+let g:prettier#config#trailing_comma = 'none'
+let g:prettier#config#parser = 'babylon'
