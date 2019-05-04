@@ -30,12 +30,12 @@ mkdir -p $HOME/.config/nvim
 
 # install init.vim
 ln -s $(realpath ./nvim)/init.vim $HOME/.config/nvim/init.vim
-ln -s $HOME/.config/nvim/init.vim $HOME/.vimrc
+ln -s $(realpath ./nvim)/plugins.vim $HOME/.config/nvim/plugins.vim
 
 # install dein.vim
-mkdir -p $VIM_DIR/dein/repos/github.com/Shougo/dein.vim #recommended path
+mkdir -p $HOME/.config/dein/repos/github.com/Shougo/dein.vim #recommended path
 git clone https://github.com/Shougo/dein.vim.git \
-	$VIM_DIR/dein/repos/github.com/Shougo/dein.vim
+	$HOME/.config/dein/repos/github.com/Shougo/dein.vim
 
 # Make required directories
 VIM_DIRS=( backup tmp )
