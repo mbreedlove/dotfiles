@@ -5,7 +5,6 @@ if [[ -f $HOME/.antigen/antigen.zsh ]]; then
   antigen use oh-my-zsh
 
   antigen bundle git
-  antigen bundle command-not-found
   antigen bundle ssh-agent
 
   ## Syntax highlighting bundle.
