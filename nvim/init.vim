@@ -1,103 +1,17 @@
+source ~/.config/nvim/plugins.vim
+
 if &compatible
   set nocompatible               " Be iMproved
 endif
+
 """ Basics
-syntax enable       " syntax highlighting on
-if &compatible
-  set nocompatible     " explicitly get out of vi-compatible mode
-endif
-set noexrc       " don't use local version of .(g)vimrc, .exrc
-set background=dark     " we plan to use a dark background
-filetype plugin indent on  " load filetype plugins/indent settings
-set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
+syntax enable           " syntax highlighting on
+set number              " Show line numbers
 
-""" Dein
-if dein#load_state('~/.vim/dein')
-  call dein#begin('~/.vim/dein')
-
-  " Let dein manage dein
-  call dein#add('Shougo/dein.vim')
-
-  call dein#add('Shougo/vimproc.vim', { 'build': 'make' })
-
-  "" Language
-  " " Ruby
-  call dein#add('vim-ruby/vim-ruby', { 'on_ft': 'ruby' })
-  call dein#add('tpope/vim-rails', { 'on_ft': 'ruby' })
-  call dein#add('tpope/vim-bundler', { 'on_ft': 'ruby' })
-  " " Elixir
-  call dein#add('elixir-editors/vim-elixir', { 'on_ft': 'elixir' })
-  call dein#add('slashmili/alchemist.vim', { 'on_ft': 'elixir' })
-  " " Javascript
-  "call dein#add('leafgarland/typescript-vim', { 'on_ft': 'typescript' })
-  call dein#add('HerringtonDarkholme/yats.vim', { 'on_ft': 'typescript' })
-  call dein#add('Quramy/tsuquyomi', { 'on_ft': 'typescript' })
-  call dein#add('glanotte/vim-jasmine', { 'on_ft': 'jasmine' })
-  call dein#add('elzr/vim-json', { 'on_ft': 'json' })
-  call dein#add('MaxMEllon/vim-jsx-pretty', { 'on_ft': 'javascript.jsx' })
-
-  call dein#add('mattn/emmet-vim', { 'on_ft': 'html' })
-  "call dein#add('vim-syntastic/syntastic')
-  call dein#add('w0rp/ale')
-  call dein#add('scrooloose/nerdcommenter')
-  "call dein#add('julialang/julia-vim', { 'on_ft': 'julia' })
-
-  " Completion
-  call dein#add('tpope/vim-endwise', { 'on_i': 1 })
-  "call dein#add('townk/vim-autoclose', { 'on_i': 1 })
-  call dein#add('Raimondi/delimitMate', { 'on_i': 1 })
-  call dein#add('Valloric/YouCompleteMe', { 'build': './install.py --system-libclang --all' })
-  call dein#add('briancollins/vim-jst')
-
-  " Code Display
-  call dein#add('nathanaelkane/vim-indent-guides')
-  call dein#add('altercation/vim-colors-solarized')
-  set runtimepath+=~/.vim/dein/repos/github.com/altercation/vim-colors-solarized
-
-  " Integrations
-  call dein#add('mileszs/ack.vim', { 'on_cmd': 'Ack' })
-  call dein#add('scrooloose/nerdtree', { 'on_cmd': 'NerdTreeToggle' })
-  call dein#add('Xuyuanp/nerdtree-git-plugin', { 'on_cmd': 'NerdTreeToggle' })
-  call dein#add('tpope/vim-fugitive')
-  call dein#add('airblade/vim-gitgutter')
-  call dein#add('prettier/vim-prettier')
-
-  " Interface
-  call dein#add('junegunn/fzf', { 'build': './install --all' })
-  call dein#add('junegunn/fzf.vim', { 'on_cmd': 'Files' })
-  call dein#add('vim-airline/vim-airline')
-  call dein#add('vim-airline/vim-airline-themes')
-
-  " Commands
-  call dein#add('terryma/vim-multiple-cursors')
-  call dein#add('easymotion/vim-easymotion')
-
-  " Other
-  call dein#add('tpope/vim-sensible')
-  call dein#add('tpope/vim-sleuth')
-  call dein#add('vim-scripts/HTML-AutoCloseTag', { 'on_ft': 'html' })
-  call dein#add('editorconfig/editorconfig-vim')
-
-  if has('nvim')
-    " Neovim specific stuff
-  endif
-
-  call dein#end()
-  call dein#save_state()
-
-  " If you want to install not installed plugins on startup.
-  if dein#check_install()
-    call dein#install()
-  endif
-endif
-
-" General {
-set omnifunc=syntaxcomplete#Complete
+""" General
 set backspace=indent,eol,start    " make backspace a more flexible
-set backup                        " make backup files
-set backupdir=~/.vim/backup  " where to put backup files
-set clipboard+=unnamed     " share windows clipboard
-set directory=~/.vim/tmp   " directory to place swap files in
+set nobackup                        " do not make backup files
+set nowritebackup
 set fileformats=unix,dos,mac   " support all three, in this order
 set hidden       " you can change buffers without saving
 if has('mouse')
@@ -105,12 +19,17 @@ if has('mouse')
 endif
 set noerrorbells     " don't make noise
 
-""" Vim UI
+""" UI
 let g:solarized_termcolors=16
-colorscheme solarized
+set background=dark     " dark background
+try
+  colorscheme solarized
+catch
+  colorscheme slate
+endtry
+
+""" Vim UI
 set linespace=0              " don't insert any extra pixel lines betweens rows
-"set list                     " we do what to show tabs, to ensure we get them out of my files
-"set listchars=tab:>-,trail:- " show tabs and trailing
 set matchtime=5              " how many tenths of a second to blink matching brackets for
 set nohlsearch               " do not highlight searched for phrases
 set incsearch                " DO highlight first term as you type
@@ -128,86 +47,50 @@ set sidescrolloff=10         " Keep 5 lines at the size
 
 
 """ Text Formatting/Layout
-set completeopt=     " don't use a pop up menu for completions
-set expandtab       " no real tabs please!
-set formatoptions=rq     " Automatically insert comment leader on return, and let gq format comments
-set ignorecase       " case insensitive by default
-set infercase       " case inferred by default
-set nowrap       " do not wrap line
-set shiftround       " when at 3 spaces, and I hit > ... go to 4, not 5
-set smartcase       " if there are caps, go case-sensitive
-set smartindent     " set smartindent
-set shiftwidth=2     " auto-indent amount when using cindent, >>, << and stuff like that
-set softtabstop=2     " when hitting tab or backspace, how many spaces should a tab be (see expandtab)
-set tabstop=4 " real tabs should be 8, and they will show with set list on
+set ignorecase          " case insensitive by default
+set infercase           " case inferred by default
+set nowrap              " do not wrap line
+set shiftround          " when at 3 spaces, and I hit > ... go to 4, not 5
+set smartcase           " if there are caps, go case-sensitive
+set smartindent         " set smartindent
+set shiftwidth=2        " auto-indent amount when using cindent, >>, << and stuff like that
+set softtabstop=2       " when hitting tab or backspace, how many spaces should a tab be (see expandtab)
+set tabstop=4           " real tabs should be 8, and they will show with set list on
+set clipboard=unnamed   " Yank and paste with system clipboard
+set pastetoggle=<F2>    " <F2> toggles paste mode
+set t_BE=               " Don't show annoying <PasteStart> and <PasteEnd> tags
 
-""" Mappings
-" Buffers
+
+" ============================================================================ "
+" ===                             KEY MAPPINGS                             === "
+" ============================================================================ "
+"" Buffers
 nmap <leader>T  :enew<CR>   " Open new buffer
 nmap <leader>l  :bnext<CR>  " Next buffer
 nmap <leader>h  :bprev<CR>  " Previous buffer
-" Emulate 'closing' the tab
+"" Emulate 'closing' the tab
 nmap <leader>q :bprev <BAR> bdelete #<CR>
 
-" CtrlP opens FZF
-nmap <C-p> :Files<CR>
+" === Denite shorcuts === "
+"   ;         - Browser currently open buffers
+"   <leader>t - Browse list of files in current directory
+"   <leader>g - Search current directory for occurences of given term and
+"   close window if no results
+"   <leader>j - Search current directory for occurences of word under cursor
+nmap ; :Denite buffer -split=floating -winrow=1<CR>
+"nmap <leader>t :Denite file/rec -split=floating -winrow=1<CR>
+nmap <C-p> :Denite file/rec -split=floating -winrow=1<CR>
+nnoremap <leader>g :<C-u>Denite grep:. -no-empty -mode=normal<CR>
+nnoremap <leader>j :<C-u>DeniteCursorWord grep:. -mode=normal<CR>
 
-set pastetoggle=<F2>                        " <F2> toggles paste mode
-set t_BE=            " Don't show annoying <PasteStart> and <PasteEnd> tags
+" === Nerdtree shorcuts === "
+"  <leader>n - Toggle NERDTree on/off
+"  <leader>f - Opens current file location in NERDTree
+nmap <C-n> :NERDTreeToggle<CR>
+nmap <C-f> :NERDTreeFind<CR>
 
-""" NerdTREE
-" Open NerdTREE if no files specified
-"   autocmd StdinReadPre * let s:std_in=1
-"   autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-" NerdTREE key binding
-map <C-f> :NERDTreeToggle<CR>
 " Close Vim if only window is NerdTREE
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" The Silver Searcher
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag for Ack
-  let g:ackprg = 'ag --vimgrep'
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-endif
-
-""" Airline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-let g:airline_theme = 'solarized'
-
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-
-""" GitGutter
-" Don't set keymappings, use Fugitive for Git management
-let g:gitgutter_map_keys = 0
-
-""" Multiple Cursors
-let g:multi_cursor_use_default_mapping=0
-let g:multi_cursor_next_key='<C-n>'
-let g:multi_cursor_prev_key='<C-p>'
-let g:multi_cursor_skip_key='<C-x>'
-let g:multi_cursor_quit_key='<Esc>'
-" Allows exiting back to normal mode rather than exiting multi_cursor
-let g:multi_cursor_exit_from_insert_mode=0
-
-""" Emmet
-let g:user_emmet_install_global = 0
-autocmd FileType html,css,htmldjango,scss,eruby,less,eelixir EmmetInstall
-imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
-let g:user_emmet_mode='i'    "enable function in insert mode
-
-" Vim-Jasmine
-autocmd BufReadPost,BufNewFile *.spec.ts set filetype=jasmine.javascript syntax=jasmine
 
 " allows cursor change in tmux mode
 if exists('$TMUX')
@@ -218,43 +101,134 @@ else
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
-"let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_typescript_checkers = ['tsuquyomi'] 
+" ============================================================================ "
+" ===                           PLUGIN SETUP                               === "
+" ============================================================================ "
 
-let g:tsuquyomi_disable_quickfix = 1
-let g:tsuquyomi_single_quote_import=1
+" Wrap in try/catch to avoid errors on initial install before plugin is available
+try
+" === Denite setup ==="
+" Use ripgrep for searching current directory for files
+" By default, ripgrep will respect rules in .gitignore
+"   --files: Print each file that would be searched (but don't search)
+"   --glob:  Include or exclues files for searching that match the given glob
+"            (aka ignore .git files)
+"
+call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git'])
 
-" disable contextual completion
-"set complete=
-let g:ycm_autoclose_preview_window_after_completion=1
-if !exists("g:ycm_semantic_triggers")
-  let g:ycm_semantic_triggers =  {
-	\   'c' : ['->', '.'],
-	\   'objc' : ['->', '.'],
-	\   'ocaml' : ['.', '#'],
-	\   'cpp,objcpp' : ['->', '.', '::'],
-	\   'perl' : ['->'],
-	\   'php' : ['->', '::', '"', "'", 'use ', 'namespace ', '\'],
-	\   'cs,jasmine,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-	\   'html': ['<', '"', '</', ' '],
-	\   'vim' : ['re![_a-za-z]+[_\w]*\.'],
-	\   'ruby' : ['.', '::'],
-	\   'lua' : ['.', ':'],
-	\   'erlang' : [':'],
-	\   'haskell' : ['.', 're!.']
-	\ }
-endif
+" Use ripgrep in place of "grep"
+call denite#custom#var('grep', 'command', ['rg'])
+
+" Custom options for ripgrep
+"   --vimgrep:  Show results with every match on it's own line
+"   --hidden:   Search hidden directories and files
+"   --heading:  Show the file name above clusters of matches from each file
+"   --S:        Search case insensitively if the pattern is all lowercase
+call denite#custom#var('grep', 'default_opts', ['--hidden', '--vimgrep', '--heading', '-S'])
+
+" Recommended defaults for ripgrep via Denite docs
+call denite#custom#var('grep', 'recursive_opts', [])
+call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+call denite#custom#var('grep', 'separator', ['--'])
+call denite#custom#var('grep', 'final_opts', [])
+
+" Remove date from buffer list
+call denite#custom#var('buffer', 'date_format', '')
+
+" Use arrows to navigate candidates
+call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
+call denite#custom#map('insert', '<Down>', '<denite:move_to_next_line>', 'noremap')
+call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
+call denite#custom#map('insert', '<Up>', '<denite:move_to_previous_line>', 'noremap')
+
+" Custom options for Denite
+"   auto_resize             - Auto resize the Denite window height automatically.
+"   prompt                  - Customize denite prompt
+"   direction               - Specify Denite window direction as directly below current pane
+"   winminheight            - Specify min height for Denite window
+"   highlight_mode_insert   - Specify h1-CursorLine in insert mode
+"   prompt_highlight        - Specify color of prompt
+"   highlight_matched_char  - Matched characters highlight
+"   highlight_matched_range - matched range highlight
+let s:denite_options = {'default' : {
+\ 'auto_resize': 1,
+\ 'prompt': 'λ:',
+\ 'direction': 'rightbelow',
+\ 'winminheight': '10',
+\ 'highlight_mode_insert': 'Visual',
+\ 'highlight_mode_normal': 'Visual',
+\ 'prompt_highlight': 'Function',
+\ 'highlight_matched_char': 'Function',
+\ 'highlight_matched_range': 'Normal'
+\ }}
+
+" Loop through denite options and enable them
+function! s:profile(opts) abort
+  for l:fname in keys(a:opts)
+    for l:dopt in keys(a:opts[l:fname])
+      call denite#custom#option(l:fname, l:dopt, a:opts[l:fname][l:dopt])
+    endfor
+  endfor
+endfunction
+
+call s:profile(s:denite_options)
+catch
+  echo 'Denite not installed. It should work after running :PlugInstall'
+endtry
+
+" === Coc.nvim === "
+" use <tab> for trigger completion and navigate to next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+
+"Close preview window when completion is done.
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" === NERDTree === "
 let g:NERDTreeWinSize = 40 
-let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
-""" Prettier
-""" Change back to default prettier settings
-let g:prettier#config#single_quote = 'true'
-let g:prettier#config#bracket_spacing = 'true'
-let g:prettier#config#jsx_bracket_same_line = 'false'
-let g:prettier#config#arrow_parens = 'avoid'
-let g:prettier#config#trailing_comma = 'none'
-let g:prettier#config#parser = 'babylon'
+" === Fugitive === "
+" Don't set keymappings, use Fugitive for Git management
+let g:gitgutter_map_keys = 0
+
+" === Vim Multiple Cursors === "
+let g:multi_cursor_use_default_mapping=0
+let g:multi_cursor_next_key='<C-n>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
+" Allows exiting back to normal mode rather than exiting multi_cursor
+let g:multi_cursor_exit_from_insert_mode=0
+
+" === Airline === "
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'solarized'
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
