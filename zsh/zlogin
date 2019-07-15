@@ -78,7 +78,9 @@ fi
 ##########
 
 # HiDPI support
-export QT_SCALE_FACTOR=2
+export QT_STYLE_OVERRIDE=Breeze
+export QT_AUTO_SCREEN_SCALE_FACTOR=0
+export QT_SCALE_FACTOR=1
 
 if hash vim 2>/dev/null; then
   alias vi=vim
