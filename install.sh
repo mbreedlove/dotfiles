@@ -34,9 +34,9 @@ ln -s $(realpath ./nvim)/plugins.vim $HOME/.config/nvim/plugins.vim
 ln -s $(realpath ./nvim)/coc-settings.json $HOME/.config/nvim/coc-settings.json
 
 # install dein.vim
-mkdir -p $HOME/.config/dein/repos/github.com/Shougo/dein.vim #recommended path
-git clone https://github.com/Shougo/dein.vim.git \
-	$HOME/.config/dein/repos/github.com/Shougo/dein.vim
+DEIN_PATH=$HOME/.cache/dein/repos/github.com/Shougo/dein.vim
+mkdir -p $DEIN_PATH
+git clone https://github.com/Shougo/dein.vim.git $DEIN_PATH
 
 # Make required directories
 VIM_DIRS=( backup tmp )

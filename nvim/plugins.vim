@@ -1,6 +1,6 @@
 """ Dein
 set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
-if dein#load_state('~/.cahe/dein')
+if dein#load_state('~/.cache/dein')
   call dein#begin('~/.cache/dein')
 
   " Let dein manage dein
