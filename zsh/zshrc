@@ -21,7 +21,8 @@ bindkey -v
 # Preserve environment when sudoing
 alias sudo=sudo -E
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f /usr/local/opt/fzf/shell/completion.zsh ] && source /usr/local/opt/fzf/shell/completion.zsh
+[ -f /usr/local/opt/fzf/shell/key-bindings.zsh ] && source /usr/local/opt/fzf/shell/key-bindings.zsh
 
 ## Lazy Load NVM
 declare -a NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq`)
