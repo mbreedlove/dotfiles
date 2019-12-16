@@ -31,6 +31,7 @@ mkdir -p $HOME/.config/nvim
 # install init.vim
 ln -s $(realpath ./nvim)/init.vim $HOME/.config/nvim/init.vim
 ln -s $(realpath ./nvim)/plugins.vim $HOME/.config/nvim/plugins.vim
+ln -s $(realpath ./nvim)/coc-settings.json $HOME/.config/nvim/coc-settings.json
 
 # install dein.vim
 mkdir -p $HOME/.config/dein/repos/github.com/Shougo/dein.vim #recommended path
