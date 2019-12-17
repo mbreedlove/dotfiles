@@ -20,10 +20,15 @@ endif
 set noerrorbells     " don't make noise
 
 """ UI
-let g:solarized_termcolors=16
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
 set background=dark     " dark background
+set termguicolors
 try
-  colorscheme solarized
+  colorscheme solarized8
 catch
   colorscheme slate
 endtry
@@ -73,21 +78,26 @@ nmap <leader>q :bprev <BAR> bdelete #<CR>
 
 " === Denite shorcuts === "
 "   ;         - Browser currently open buffers
-"   <leader>t - Browse list of files in current directory
+"   <C-p> - Browse list of files in current directory
 "   <leader>g - Search current directory for occurences of given term and
 "   close window if no results
 "   <leader>j - Search current directory for occurences of word under cursor
-nmap ; :Denite buffer -split=floating -winrow=1<CR>
-"nmap <leader>t :Denite file/rec -split=floating -winrow=1<CR>
-nmap <C-p> :Denite file/rec -split=floating -winrow=1<CR>
-nnoremap <leader>g :<C-u>Denite grep:. -no-empty -mode=normal<CR>
-nnoremap <leader>j :<C-u>DeniteCursorWord grep:. -mode=normal<CR>
+nmap ; :Denite buffer -split=floating -winrow=1 -start-filter=true<CR>
+nmap <C-p> :Denite file/rec -split=floating -winrow=1 -start-filter=true<CR>
+nnoremap <leader>g :<C-u>Denite grep:. -no-empty<CR>
+nnoremap <leader>j :<C-u>DeniteCursorWord grep:.<CR>
 
 " === Nerdtree shorcuts === "
-"  <leader>n - Toggle NERDTree on/off
-"  <leader>f - Opens current file location in NERDTree
-nmap <C-n> :NERDTreeToggle<CR>
-nmap <C-f> :NERDTreeFind<CR>
+nnoremap <C-f> :call SmartNERDTree()<CR>
+function! SmartNERDTree()
+    if exists("g:NERDTree") && g:NERDTree.IsOpen()
+        NERDTreeClose
+    elseif filereadable(expand('%'))
+          NERDTreeFind
+    else
+          NERDTreeToggle
+    endif
+endfun
 
 " Close Vim if only window is NerdTREE
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -102,7 +112,7 @@ else
 endif
 
 " ============================================================================ "
-" ===                           PLUGIN SETUP                               === "
+" ===                           DENITE SETUP                               === "
 " ============================================================================ "
 
 " Wrap in try/catch to avoid errors on initial install before plugin is available
@@ -118,15 +128,13 @@ call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git
 
 " Use ripgrep in place of "grep"
 call denite#custom#var('grep', 'command', ['rg'])
-
 " Custom options for ripgrep
-"   --vimgrep:  Show results with every match on it's own line
-"   --hidden:   Search hidden directories and files
-"   --heading:  Show the file name above clusters of matches from each file
-"   --S:        Search case insensitively if the pattern is all lowercase
-call denite#custom#var('grep', 'default_opts', ['--hidden', '--vimgrep', '--heading', '-S'])
+"   --vimgrep:    Show results with every match on it's own line
+"   --heading:    Show the file name above clusters of matches from each file
+"   -S:          Search case insensitively if the pattern is all lowercase
+call denite#custom#var('grep', 'default_opts', ['--vimgrep', '--heading'])
 
-" Recommended defaults for ripgrep via Denite docs
+" Recommended defaults for ripgrep from Denite docs
 call denite#custom#var('grep', 'recursive_opts', [])
 call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
 call denite#custom#var('grep', 'separator', ['--'])
@@ -136,10 +144,10 @@ call denite#custom#var('grep', 'final_opts', [])
 call denite#custom#var('buffer', 'date_format', '')
 
 " Use arrows to navigate candidates
-call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
-call denite#custom#map('insert', '<Down>', '<denite:move_to_next_line>', 'noremap')
-call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
-call denite#custom#map('insert', '<Up>', '<denite:move_to_previous_line>', 'noremap')
+"call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
+"call denite#custom#map('insert', '<Down>', '<denite:move_to_next_line>', 'noremap')
+"call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
+"call denite#custom#map('insert', '<Up>', '<denite:move_to_previous_line>', 'noremap')
 
 " Custom options for Denite
 "   auto_resize             - Auto resize the Denite window height automatically.
@@ -159,7 +167,7 @@ let s:denite_options = {'default' : {
 \ 'highlight_mode_normal': 'Visual',
 \ 'prompt_highlight': 'Function',
 \ 'highlight_matched_char': 'Function',
-\ 'highlight_matched_range': 'Normal'
+\ 'highlight_matched_range': 'Function'
 \ }}
 
 " Loop through denite options and enable them
@@ -175,6 +183,27 @@ call s:profile(s:denite_options)
 catch
   echo 'Denite not installed. It should work after running :PlugInstall'
 endtry
+
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+  nnoremap <silent><buffer><expr> <CR>
+  \ denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> d
+  \ denite#do_map('do_action', 'delete')
+  nnoremap <silent><buffer><expr> p
+  \ denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> q
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> i
+  \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> <Space>
+  \ denite#do_map('toggle_select').'j'
+endfunction
+
+autocmd FileType denite-filter call s:denite_filter_my_settings()
+function! s:denite_filter_my_settings() abort
+  imap <silent><buffer> <Esc> <Plug>(denite_filter_quit)
+endfunction
 
 " === Coc.nvim === "
 " use <tab> for trigger completion and navigate to next complete item
@@ -194,6 +223,9 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <leader>rn  <Plug>(coc-rename)
+xmap <leader>f   <Plug>(coc-format-selected)
+nmap <leader>f   <Plug>(coc-format-selected)
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>

@@ -7,16 +7,18 @@ if dein#load_state('~/.cache/dein')
   call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
 
   call dein#add('Shougo/vimproc.vim', { 'build': 'make' })
-  call dein#add('Shougo/echodoc.vim')
+  "call dein#add('Shougo/echodoc.vim')
   " For Denite features
   call dein#add('Shougo/denite.nvim')
   " For Completion
   call dein#add('neoclide/coc.nvim', {'merge':0, 'build': './install.sh nightly'})
 
   "" Language
-  """ Typescript
-  call dein#add('HerringtonDarkholme/yats.vim') ", { 'on_ft': 'typescript' })
-  call dein#add('mhartington/nvim-typescript', {'build': './install.sh'})
+  """ Multi-language syntax pack
+  call dein#add('sheerun/vim-polyglot')
+  
+  """ .NET / C#
+  call dein#add('neoclide/coc.nvim', { 'on_ft': 'cs' })
 
   call dein#add('scrooloose/nerdcommenter')
 
@@ -26,14 +28,16 @@ if dein#load_state('~/.cache/dein')
 
   " Code Display
   call dein#add('nathanaelkane/vim-indent-guides')
-  call dein#add('altercation/vim-colors-solarized')
-  set runtimepath+=~/.cache/dein/repos/github.com/altercation/vim-colors-solarized
 
   " Integrations
-  call dein#add('scrooloose/nerdtree', { 'on_cmd': 'NerdTreeToggle' })
-  call dein#add('Xuyuanp/nerdtree-git-plugin', { 'on_cmd': 'NerdTreeToggle' })
+  call dein#add('scrooloose/nerdtree', { 'on_cmd': ['NERDTreeToggle', 'NERDTreeFocus'] })
+  call dein#add('Xuyuanp/nerdtree-git-plugin', { 'on_cmd': ['NerdTreeToggle', 'NERDTreeFocus'] })
   call dein#add('tpope/vim-fugitive')
   call dein#add('airblade/vim-gitgutter')
+
+  " Colorscheme
+  call dein#add('lifepillar/vim-solarized8')
+  "call dein#add('morhetz/gruvbox')
 
   " Interface
   call dein#add('vim-airline/vim-airline')
