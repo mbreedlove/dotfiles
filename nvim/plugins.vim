@@ -16,9 +16,11 @@ if dein#load_state('~/.cache/dein')
   "" Language
   """ Multi-language syntax pack
   call dein#add('sheerun/vim-polyglot')
-  
-  """ .NET / C#
-  call dein#add('neoclide/coc.nvim', { 'on_ft': 'cs' })
+
+  """ Typescript
+  call dein#add('HerringtonDarkholme/yats.vim') ", { 'on_ft': 'typescript' })
+  call dein#add('mhartington/nvim-typescript', {'build': './install.sh'})
+  call dein#add('othree/html5.vim')
 
   call dein#add('scrooloose/nerdcommenter')
 
