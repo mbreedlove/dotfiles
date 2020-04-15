@@ -24,11 +24,11 @@ bindkey -v
 # Preserve environment when sudoing
 alias sudo=sudo -E
 
-if [ "$(uname)" == "Darwin" ]; then
+# FZF Integration
+if [[ "$(uname)" = "Darwin" ]; then
   [ -f /usr/local/opt/fzf/shell/completion.zsh ] && source /usr/local/opt/fzf/shell/completion.zsh
   [ -f /usr/local/opt/fzf/shell/key-bindings.zsh ] && source /usr/local/opt/fzf/shell/key-bindings.zsh
-elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-  # FZF Integration
+elif [ "$(expr substr $(uname -s) 1 5)" = "Linux" ]; then
   [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
   [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
 fi
