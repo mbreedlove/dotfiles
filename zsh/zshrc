@@ -25,7 +25,7 @@ bindkey -v
 alias sudo=sudo -E
 
 # FZF Integration
-if [[ "$(uname)" = "Darwin" ]; then
+if [ "$(uname)" = "Darwin" ]; then
   [ -f /usr/local/opt/fzf/shell/completion.zsh ] && source /usr/local/opt/fzf/shell/completion.zsh
   [ -f /usr/local/opt/fzf/shell/key-bindings.zsh ] && source /usr/local/opt/fzf/shell/key-bindings.zsh
 elif [ "$(expr substr $(uname -s) 1 5)" = "Linux" ]; then
