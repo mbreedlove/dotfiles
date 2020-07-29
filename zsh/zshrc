@@ -25,17 +25,19 @@ bindkey -v
 alias sudo=sudo -E
 
 # FZF Integration
-if [ "$(uname)" = "Darwin" ]; then
-  [ -f /usr/local/opt/fzf/shell/completion.zsh ] && source /usr/local/opt/fzf/shell/completion.zsh
-  [ -f /usr/local/opt/fzf/shell/key-bindings.zsh ] && source /usr/local/opt/fzf/shell/key-bindings.zsh
-elif [ "$(expr substr $(uname -s) 1 5)" = "Linux" ]; then
-  [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
-  [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
+if command -v fzf >/dev/null 2>&1; then
+  if [ "$(uname)" = "Darwin" ]; then
+    [ -f /usr/local/opt/fzf/shell/key-bindings.zsh ] && source /usr/local/opt/fzf/shell/key-bindings.zsh
+    [ -f /usr/local/opt/fzf/shell/completion.zsh ] && source /usr/local/opt/fzf/shell/completion.zsh
+  elif [ "$(expr substr $(uname -s) 1 5)" = "Linux" ]; then
+    [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+    [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
+  fi
 fi
 
 ## Lazy Load NVM
-if [ -d "~/.nvm" ]; then
-  declare -a NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq`)
+if [ -d "$HOME/.nvm" ]; then
+  declare -a NODE_GLOBALS=(`find $HOME/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq`)
 
   NODE_GLOBALS+=("node")
   NODE_GLOBALS+=("nvm")
@@ -51,4 +53,27 @@ if [ -d "~/.nvm" ]; then
   done
 fi
 
-eval "$(rbenv init -)"
+## Lazy Load rbenv
+if [ -d "$HOME/.rbenv" ]; then
+  declare -a RUBY_GLOBALS=(`find $HOME/.rbenv/shims | xargs -n1 basename | sort | uniq`)
+
+  RUBY_GLOBALS+=("rbenv")
+
+  load_rbenv () {
+    eval "$(rbenv init -)"
+  }
+
+  for cmd in "${RUBY_GLOBALS[@]}"; do
+      eval "${cmd}(){ unset -f ${RUBY_GLOBALS}; load_rbenv; ${cmd} \$@ }"
+  done
+fi
+
+## Load yarn binaries
+if [ -d "$HOME/.yarn/bin" ]; then
+  export PATH="$PATH:$HOME/.yarn/bin"
+fi
+
+## Load dotnet tools
+if [ -d "$HOME/.dotnet/tools" ]; then
+  export PATH="$PATH:$HOME/.dotnet/tools"
+fi
